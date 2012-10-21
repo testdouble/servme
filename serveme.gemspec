@@ -18,4 +18,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   ["json","sinatra", "thin"].each { |d| gem.add_runtime_dependency d }
+  # ["debugger"].each { |d| gem.add_development_dependency d }
 end

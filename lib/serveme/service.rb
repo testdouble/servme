@@ -20,7 +20,7 @@ module Serveme
         self.class.satisfy(
           request.path,
           type,
-          request.send(type.upcase)
+          request.send(type.to_s.upcase)
         )
       )
     end
