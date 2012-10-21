@@ -43,7 +43,7 @@ before(:each) do
       :login => "todd",
       :password => "scotch"
     }
-  }).respond_with(:token => "1234567890") }
+  }).respond_with(:token => "1234567890")
 end
 ```
 
@@ -60,7 +60,7 @@ before(:each) do
       :login => "todd",
       :password => "scotch"
     }
-  }).error_with(401) }
+  }).error_with(401)
 end
 ```
 
