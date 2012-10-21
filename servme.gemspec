@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Servme::VERSION
   gem.authors       = ["Justin Searls"]
   gem.email         = ["searls@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = "a simple test server for stubbing API responses"
+  gem.summary       = "Servme lets you stub server responses by standing-in for some remote system your code under test depends on"
   gem.homepage      = "https://github.com/testdouble/servme"
 
   gem.files         = `git ls-files`.split($/)
