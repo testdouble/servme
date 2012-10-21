@@ -17,5 +17,5 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  ["json","goliath"].each { |d| gem.add_runtime_dependency d }
+  ["json","sinatra", "thin"].each { |d| gem.add_runtime_dependency d }
 end
