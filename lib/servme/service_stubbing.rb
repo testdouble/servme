@@ -1,4 +1,4 @@
-module Serveme
+module Servme
   class ServiceStubbing
     def initialize(request)
       @request = request

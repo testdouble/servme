@@ -1,3 +1,3 @@
-module Serveme
+module Servme
   VERSION = "0.0.1"
 end

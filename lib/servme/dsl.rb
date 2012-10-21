@@ -1,11 +1,11 @@
-module Serveme
+module Servme
   module DSL
     def on(request)
       ServiceStubbing.new(request)
     end
   end
 
-  #methods invoked statically Serveme.foo_bar
+  #methods invoked statically Servme.foo_bar
   def self.start(options = {})
     Service.run!({
       :port => 51922

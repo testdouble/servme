@@ -2,7 +2,7 @@ require 'thin'
 require 'sinatra/base'
 require 'json'
 
-module Serveme
+module Servme
 
   class Service < Sinatra::Base
     set :server, 'thin'
@@ -68,7 +68,7 @@ module Serveme
         :headers => DEFAULT_HEADERS,
         :status_code => 404,
         :data => {
-          :error => "Serveme doesn't know how to respond to this request",
+          :error => "Servme doesn't know how to respond to this request",
           :request => {
             :method => method,
             :params => params,
