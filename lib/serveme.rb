@@ -1,5 +1,4 @@
 require "serveme/version"
-
-module Serveme
-  # Your code goes here...
-end
+require 'serveme/service'
+require 'serveme/service_stubbing'
+require 'serveme/dsl'
