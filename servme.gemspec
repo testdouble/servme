@@ -17,6 +17,10 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  ["json","sinatra", "thin"].each { |d| gem.add_runtime_dependency d }
-  # ["debugger"].each { |d| gem.add_development_dependency d }
+  ["json","sinatra","thin"].each { |d| gem.add_runtime_dependency d }
+
+  gem.add_development_dependency "rspec"
+  gem.add_development_dependency "rspec-given", '1.4.2'
+  gem.add_development_dependency "rack-test"
+  # gem.add_development_dependency "debugger"
 end

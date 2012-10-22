@@ -27,7 +27,7 @@ module Servme
 
     def format_response(response)
       body = json?(response) ? JSON::dump(response[:data]) : response[:data]
-      [response[:status_code], response[:headers], JSON::dump(response[:data])]
+      [response[:status_code], response[:headers], body]
     end
 
     def json?(response)
@@ -48,7 +48,7 @@ module Servme
     def self.stub(config)
       (@@stubbings[config[:url]] ||= {}).tap do |urls|
         (urls[config[:method] || :get] ||= {}).tap do |methods|
-          methods[stringify_keys(config[:params]) || {}] = {
+          methods[stringify_keys(config[:params] || {})] = {
             :data => config[:response],
             :headers => DEFAULT_HEADERS.merge(config[:headers] || {}),
             :status_code => config[:status_code] || 200
