@@ -7,8 +7,17 @@ module Servme
   class Service < Sinatra::Base
     set :server, 'thin'
 
+    get '/' do
+      send_file 'dist/index.html'
+    end
+
     get '*' do
-      handle_request(:get)
+      file = File.join('dist', request.path)
+      if(File.exists?(file))
+        send_file file
+      else
+        handle_request(:get)
+      end
     end
 
     post '*' do
@@ -20,7 +29,7 @@ module Servme
         self.class.satisfy(
           request.path,
           type,
-          request.send(type.to_s.upcase)
+          request.params
         )
       )
     end
