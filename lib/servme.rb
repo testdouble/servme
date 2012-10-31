@@ -1,4 +1,6 @@
-require "servme/version"
+require 'servme/version'
+require 'servme/stubber'
+require 'servme/responder'
 require 'servme/service'
 require 'servme/service_stubbing'
 require 'servme/dsl'

@@ -5,11 +5,11 @@ module Servme
     end
 
     def respond_with(response)
-      Service.stub(@request.merge({ :response => response }))
+      Stubber.instance.stub(@request.merge({ :response => response }))
     end
 
     def error_with(status_code)
-      Service.stub(@request.merge({ :status_code => status_code }))
+      Stubber.instance.stub(@request.merge({ :status_code => status_code }))
     end
   end
 end
