@@ -46,4 +46,21 @@ describe Servme::Responder do
 
     JSON.parse(response.last).should == {"foo" => "bar"}
   end
+
+  context "when the responder is configured with some static file options" do
+    subject do
+      Servme::Responder.new(sinatra_app,
+                            {
+                              :static_file_root_path => 'build',
+                              :static_file_vdir => '/vdir',
+                            })
+    end
+
+    it "returns a static file response for a file in a vdir" do
+      File.stub(:exists? => true)
+      sinatra_app.should_receive(:send_file).with("build/foo")
+
+      subject.respond(stub(:path => "/vdir/foo", :request_method => "GET"))
+    end
+  end
 end

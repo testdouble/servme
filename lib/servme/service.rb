@@ -16,7 +16,13 @@ module Servme
     end
 
     def responder
-      @responder ||= Responder.new(self, {})
+      @responder ||= Responder.new(
+        self,
+        {
+          :static_file_root_path => settings.respond_to?(:static_file_root_path) ? settings.static_file_root_path : nil,
+          :static_file_vdir => settings.respond_to?(:static_file_vdir) ? settings.static_file_vdir : nil
+        }
+      )
     end
 
     def self.clear

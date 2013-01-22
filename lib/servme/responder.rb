@@ -6,14 +6,15 @@ module Servme
     }
 
     DEFAULT_OPTIONS = {
-      :static_file_root_path => "dist"
+      :static_file_root_path => "dist",
+      :static_file_vdir => //
     }
 
     attr_accessor :sinatra_app, :options
 
     def initialize(sinatra_app, opts)
       @sinatra_app = sinatra_app
-      @options = DEFAULT_OPTIONS.merge(opts)
+      @options = DEFAULT_OPTIONS.merge(opts.reject { |k,v| v.nil? })
     end
 
     def stubber
@@ -21,7 +22,9 @@ module Servme
     end
 
     def respond(request)
-      static_file = File.join(options[:static_file_root_path], request.path)
+      relative_path_on_disk = request.path.sub(options[:static_file_vdir], '')
+
+      static_file = File.join(options[:static_file_root_path], relative_path_on_disk)
       stub = stubber.stub_for_request(request)
       if (stub)
         format_response(stub)
