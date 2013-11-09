@@ -1,5 +1,7 @@
 # Servme
 
+[![Build Status](https://travis-ci.org/testdouble/servme.png?branch=master)](https://travis-ci.org/testdouble/servme)
+
 Servme is very rough and not ready for public consumption.
 
 If you're still reading, servme is a test library that lets you replace some server that your application depends on with an easy-to-stub Sinatra app that can be run in a thread that's subordinate to your tests.
