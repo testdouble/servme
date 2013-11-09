@@ -15,6 +15,14 @@ module Servme
      responder.respond(request)
     end
 
+    put '*' do
+      responder.respond(request)
+    end
+
+    delete '*' do
+      responder.respond(request)
+    end
+
     def responder
       @responder ||= Responder.new(self, {})
     end

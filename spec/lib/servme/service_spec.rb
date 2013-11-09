@@ -36,8 +36,20 @@ describe Servme::Service do
         When { post('/do/stuff', {:like => "dance"}) }
       end
     end
+
+    describe "#put" do
+      it_behaves_like "default responses" do
+        Given(:method) { "put" }
+        When { put('/do/stuff', { :like => "dance" }) }
+      end
+    end
+
+    describe "#delete" do
+      it_behaves_like "default responses" do
+        Given(:method) { "delete" }
+        When { delete('/do/stuff', { :like => "dance" }) }
+      end
+    end
   end
-
-
 
 end
