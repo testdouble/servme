@@ -65,7 +65,8 @@ module Servme
   private
 
     def process_json_request(request)
-      if request.params && request.params.empty? && request.env && request.env['CONTENT_TYPE'] =~ /application\/json/
+      request_params = request.params rescue nil
+      if request_params && request_params.empty? && request.env && request.env['CONTENT_TYPE'] =~ /application\/json/
         parsed_json = JSON.parse(request.body.read)
         parsed_json.each do |k,v|
           request.params[k] = v
