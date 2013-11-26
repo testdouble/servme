@@ -4,8 +4,8 @@ module Servme
       @request = request
     end
 
-    def respond_with(response)
-      Stubber.instance.stub(@request.merge({ :response => response }))
+    def respond_with(response, status_code = nil)
+      Stubber.instance.stub(@request.merge({ :response => response, :status_code => status_code }))
     end
 
     def error_with(status_code)

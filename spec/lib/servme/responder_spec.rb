@@ -2,17 +2,40 @@ require 'spec_helper'
 describe Servme::Responder do
 
   let(:stubber) { Servme::Stubber.instance }
-  let(:sinatra_app) { stub }
+  let(:sinatra_app) { double }
   subject { Servme::Responder.new(sinatra_app, {}) }
 
   before { stubber.clear }
 
+  context "when the responder receives a JSON request" do
+    let(:params) { {"foo" => "bar"} }
+
+    it "extracts and parses the json" do
+      stubber.stub(:url => "/foo", :method => :get, :params => params, :response => {"bar" => "foo"})
+
+      response = subject.respond(double(
+        :path => "/foo",
+        :request_method => "GET",
+        :params => {},
+        :env => {"CONTENT_TYPE"=>"application/json; charset=UTF-8"},
+        :body => StringIO.new(params.to_json)
+      ))
+
+      JSON.parse(response.last).should == {"bar" => "foo"}
+    end
+  end
+
   it "returns stubs" do
     stubber.stub(:url => "/foo", :method => :get, :params => {}, :response => {"foo" => "bar"})
 
-    response = subject.respond(stub(:path => "/foo", :request_method => "GET", :params => {}))
+    response = subject.respond(double(
+      :path => "/foo",
+      :request_method => "GET",
+      :params => {},
+      :env => nil
+    ))
 
-    #response is a Rack response, its last entry is the resopnse body
+    #response is a Rack response, its last entry is the response body
     JSON.parse(response.last).should == {"foo" => "bar"}
   end
 
@@ -20,13 +43,21 @@ describe Servme::Responder do
     File.stub(:exists? => true)
     sinatra_app.should_receive(:send_file).with("dist/foo")
 
-    subject.respond(stub(:path => "/foo", :request_method => "GET"))
+    subject.respond(double(
+      :path => "/foo",
+      :request_method => "GET",
+      :params => nil
+    ))
   end
 
   it "responds with the static index.html if the request is /" do
     sinatra_app.should_receive(:send_file).with("dist/index.html")
 
-    subject.respond(stub(:path => "/", :request_method => "GET"))
+    subject.respond(double(
+      :path => "/",
+      :request_method => "GET",
+      :params => nil
+    ))
   end
 
   it "allows you to specify an alternate static_file_root_path" do
@@ -34,7 +65,11 @@ describe Servme::Responder do
     File.stub(:exists? => true)
     sinatra_app.should_receive(:send_file).with("public/style.css")
 
-    responder.respond(stub(:path => "/style.css", :request_method => "GET"))
+    responder.respond(double(
+      :path => "/style.css",
+      :request_method => "GET",
+      :params => nil
+    ))
   end
 
   it "returns the stub if there is both a stub and a static file" do
@@ -42,7 +77,12 @@ describe Servme::Responder do
     File.stub(:exists? => true)
     sinatra_app.should_not_receive(:send_file)
 
-    response = subject.respond(stub(:path => "/foo", :request_method => "GET", :params => {}))
+    response = subject.respond(double(
+      :path => "/foo",
+      :request_method => "GET",
+      :params => {},
+      :env => nil
+    ))
 
     JSON.parse(response.last).should == {"foo" => "bar"}
   end
@@ -60,7 +100,11 @@ describe Servme::Responder do
       File.stub(:exists? => true)
       sinatra_app.should_receive(:send_file).with("build/foo")
 
-      subject.respond(stub(:path => "/vdir/foo", :request_method => "GET"))
+      subject.respond(double(
+        :path => "/vdir/foo",
+        :request_method => "GET",
+        :params => nil
+      ))
     end
   end
 end
