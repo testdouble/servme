@@ -22,6 +22,7 @@ module Servme
     end
 
     def respond(request)
+      process_json_request(request)
       relative_path_on_disk = request.path.sub(options[:static_file_vdir], '')
 
       static_file = File.join(options[:static_file_root_path], relative_path_on_disk)
@@ -60,5 +61,17 @@ module Servme
         }
       }
     end
+
+  private
+
+    def process_json_request(request)
+      if request.params && request.params.empty? && request.env && request.env['CONTENT_TYPE'] =~ /application\/json/
+        parsed_json = JSON.parse(request.body.read)
+        parsed_json.each do |k,v|
+          request.params[k] = v
+        end
+      end
+    end
+
   end
 end
