@@ -80,6 +80,22 @@ module Servme
       Then { last_response.status.should == 333 }
     end
 
+    describe "response PLUS status code" do
+      Given do
+        ServiceStubbing.new({
+          :url => "/bizness/stuff",
+          :method => :post,
+          :params => {
+            :bizness => "true",
+            :money => "12"
+          }
+        }).respond_with({ :sad => "panda" }, 430)
+      end
+      When { post('/bizness/stuff', { :bizness => true, :money => 12 }) }
+      Then { last_response.status.should == 430 }
+      Then { last_response.body.should be_json :sad => "panda" }
+    end
+
     describe "non-json responses" do
       Given do
         ServiceStubbing.new({
