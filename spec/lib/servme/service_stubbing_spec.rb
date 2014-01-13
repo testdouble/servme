@@ -111,5 +111,18 @@ module Servme
       Then { last_response.headers['Content-Type'].should == "application/html" }
     end
 
+    describe "passing in another header option" do
+      Given do
+        ServiceStubbing.new({
+          :url => "/index",
+          :method => :get,
+        }).respond_with({:body => 'check out my body!', :headers => {'set-cookie' => 'logged_in=true'}})
+      end
+      When { get('/index') }
+      Then { last_response.body.should be_json :body => "check out my body!" }
+      Then { last_response.headers['set-cookie'].should == 'logged_in=true' }
+
+    end
+
   end
 end
