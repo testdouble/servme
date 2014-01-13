@@ -16,11 +16,23 @@ module Servme
         (urls[config[:method] || :get] ||= {}).tap do |methods|
           methods[stringify_keys(config[:params] || {})] = {
             :data => config[:response],
-            :headers => Responder::DEFAULT_HEADERS.merge(config[:headers] || {}),
+            :headers => get_headers(config),
             :status_code => config[:status_code] || 200
           }
         end
       end
+    end
+
+    def get_headers(config)
+      response = config[:response]
+
+      headers = if response.is_a?(Hash)
+        response.delete(:headers)
+      end || {}
+
+      headers.merge!(config[:headers] || {})
+
+      Responder::DEFAULT_HEADERS.merge(headers)
     end
 
     def stub_for_request(req)
