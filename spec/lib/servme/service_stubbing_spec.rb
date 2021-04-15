@@ -116,11 +116,11 @@ module Servme
         ServiceStubbing.new({
           :url => "/index",
           :method => :get,
-        }).respond_with({:body => 'check out my body!', :headers => {'set-cookie' => 'logged_in=true'}})
+        }).respond_with({:body => 'check out my body!', :headers => {'some-header' => 'logged_in=true'}})
       end
       When { get('/index') }
       Then { last_response.body.should be_json :body => "check out my body!" }
-      Then { last_response.headers['set-cookie'].should == 'logged_in=true' }
+      Then { last_response.headers['some-header'].should == 'logged_in=true' }
 
     end
 
