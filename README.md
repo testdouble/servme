@@ -1,6 +1,6 @@
 # Servme
 
-[![Build Status](https://travis-ci.org/testdouble/servme.png?branch=master)](https://travis-ci.org/testdouble/servme)
+[![Build Status](https://travis-ci.org/testdouble/servme.png?branch=main)](https://travis-ci.org/testdouble/servme)
 
 Servme is very rough and not ready for public consumption.
 
